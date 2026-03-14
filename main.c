@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "LIS302DL.h"
+#include "LIS3DSHTR.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -100,8 +100,11 @@ int main(void)
   MX_I2C2_Init();
   MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
+	HAL_TIM_Base_Start_IT(&htim7);
+
 	lis.interface = LIS_SPI;
 	lis.hspi = &hspi1;
+
 	lis.cs_port = GPIOE;
 	lis.cs_pin = GPIO_PIN_3;
 
@@ -232,7 +235,7 @@ static void MX_SPI1_Init(void)
   hspi1.Init.Mode = SPI_MODE_MASTER;
   hspi1.Init.Direction = SPI_DIRECTION_2LINES;
   hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
-  hspi1.Init.CLKPolarity = SPI_POLARITY_HIGH;
+  hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi1.Init.CLKPhase = SPI_PHASE_2EDGE;
   hspi1.Init.NSS = SPI_NSS_SOFT;
   hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
@@ -356,4 +359,3 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
-
